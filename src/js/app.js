@@ -46,6 +46,7 @@ function render(variables = {}, debug = true) {
 
   function createDisplayValues(variables) {
     const defaultSocialMediaUsername = "4geeksacademy";
+
     return {
       includeCover: variables.includeCover,
       background: variables.background,
@@ -56,11 +57,25 @@ function render(variables = {}, debug = true) {
       city: variables.city || "City",
       avatarURL: variables.avatarURL,
       socialMediaPosition: variables.socialMediaPosition,
-      twitter: variables.twitter || defaultSocialMediaUsername,
-      github: variables.github || defaultSocialMediaUsername,
-      linkedin: variables.linkedin || defaultSocialMediaUsername,
-      instagram: variables.instagram || defaultSocialMediaUsername
+      twitterURL: `https://twitter.com/${variables.twitter ||
+        defaultSocialMediaUsername}`,
+      githubURL: `https://github.com/${variables.github ||
+        defaultSocialMediaUsername}`,
+      linkedinURL: createLinkedinURL(
+        variables.linkedin,
+        defaultSocialMediaUsername
+      ),
+      instagramURL: `https://instagram.com/${variables.instagram ||
+        defaultSocialMediaUsername}`
     };
+  }
+
+  function createLinkedinURL(linkedinUsername, defaultSocialMediaUsername) {
+    if (!linkedinUsername) {
+      return `https://linkedin.com/school/${defaultSocialMediaUsername}`;
+    }
+
+    return `https://linkedin.com/in/${linkedinUsername}`;
   }
 
   function renderCover(displayValues) {
@@ -79,22 +94,22 @@ function render(variables = {}, debug = true) {
     return `
       <ul class="${displayValues.socialMediaPosition}">
         <li>
-          <a href="https://twitter.com/${displayValues.twitter}" target="_blank">
+          <a href="${displayValues.twitterURL}" target="_blank">
             <i class="fab fa-twitter"></i>
           </a>
         </li>
         <li>
-          <a href="https://github.com/${displayValues.github}" target="_blank">
+          <a href="${displayValues.githubURL}" target="_blank">
             <i class="fab fa-github"></i>
           </a>
         </li>
         <li>
-          <a href="https://linkedin.com/school/${displayValues.linkedin}" target="_blank">
+          <a href="${displayValues.linkedinURL}" target="_blank">
             <i class="fab fa-linkedin"></i>
           </a>
         </li>
         <li>
-          <a href="https://instagram.com/${displayValues.instagram}" target="_blank">
+          <a href="${displayValues.instagramURL}" target="_blank">
             <i class="fab fa-instagram"></i>
           </a>
         </li>
@@ -153,7 +168,7 @@ window.onload = function() {
   function handlePickerChange(event) {
     const attribute = event.target.getAttribute("for");
     const value = parsePickerValue(event.target.value);
-    setVariables(attribute, value);
+    setVariableValue(attribute, value);
     render(window.variables);
   }
 
@@ -164,7 +179,7 @@ window.onload = function() {
     return value;
   }
 
-  function setVariables(attribute, value) {
+  function setVariableValue(attribute, value) {
     window.variables[attribute] = value;
   }
 };
