@@ -79,22 +79,22 @@ function render(variables = {}, debug = true) {
     return `
       <ul class="${displayValues.socialMediaPosition}">
         <li>
-          <a href="https://twitter.com/${displayValues.twitter}">
+          <a href="https://twitter.com/${displayValues.twitter}" target="_blank">
             <i class="fab fa-twitter"></i>
           </a>
         </li>
         <li>
-          <a href="https://github.com/${displayValues.github}">
+          <a href="https://github.com/${displayValues.github}" target="_blank">
             <i class="fab fa-github"></i>
           </a>
         </li>
         <li>
-          <a href="https://linkedin.com/school/${displayValues.linkedin}">
+          <a href="https://linkedin.com/school/${displayValues.linkedin}" target="_blank">
             <i class="fab fa-linkedin"></i>
           </a>
         </li>
         <li>
-          <a href="https://instagram.com/${displayValues.instagram}">
+          <a href="https://instagram.com/${displayValues.instagram}" target="_blank">
             <i class="fab fa-instagram"></i>
           </a>
         </li>
