@@ -27,20 +27,24 @@ function render(variables = {}, debug = true) {
     console.log("These are the current variables", variables);
   }
 
-  const displayValues = getDisplayValues();
+  document.querySelector("#widget_content").innerHTML = renderProfileCard(
+    createDisplayValues(variables)
+  );
 
-  document.querySelector("#widget_content").innerHTML = `
+  function renderProfileCard(displayValues) {
+    return `
     <div class="widget">
-      ${renderCover()}
+      ${renderCover(displayValues)}
       <img src="${displayValues.avatarURL}" class="photo" />
       <h1>${displayValues.name} ${displayValues.lastName}</h1>
       <h2>${displayValues.role}</h2>
       <h3>${displayValues.city}, ${displayValues.country}</h3>
-      ${renderSocialMedia()}
+      ${renderSocialMedia(displayValues)}
     </div>
   `;
+  }
 
-  function getDisplayValues() {
+  function createDisplayValues(variables) {
     const defaultSocialMediaUsername = "4geeksacademy";
     return {
       includeCover: variables.includeCover,
@@ -59,7 +63,7 @@ function render(variables = {}, debug = true) {
     };
   }
 
-  function renderCover() {
+  function renderCover(displayValues) {
     if (!displayValues.includeCover) {
       return `<div class="cover"></div>`;
     }
@@ -71,7 +75,7 @@ function render(variables = {}, debug = true) {
     `;
   }
 
-  function renderSocialMedia() {
+  function renderSocialMedia(displayValues) {
     return `
       <ul class="${displayValues.socialMediaPosition}">
         <li>
