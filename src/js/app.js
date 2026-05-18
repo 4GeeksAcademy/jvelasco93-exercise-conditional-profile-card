@@ -41,25 +41,32 @@ function render(variables = {}, debug = true) {
   `;
 
   function getDisplayValues() {
+    const defaultSocialMediaUsername = "4geeksacademy";
     return {
+      includeCover: variables.includeCover,
+      background: variables.background,
       name: variables.name || "Name",
       lastName: variables.lastName || "Last Name",
       role: variables.role || "Web Developer",
       country: variables.country || "Country",
       city: variables.city || "City",
       avatarURL: variables.avatarURL,
-      socialMediaPosition: variables.socialMediaPosition
+      socialMediaPosition: variables.socialMediaPosition,
+      twitter: variables.twitter || defaultSocialMediaUsername,
+      github: variables.github || defaultSocialMediaUsername,
+      linkedin: variables.linkedin || defaultSocialMediaUsername,
+      instagram: variables.instagram || defaultSocialMediaUsername
     };
   }
 
   function renderCover() {
-    if (!variables.includeCover) {
+    if (!displayValues.includeCover) {
       return `<div class="cover"></div>`;
     }
 
     return `
       <div class="cover">
-        <img src="${variables.background}" />
+        <img src="${displayValues.background}" />
       </div>
     `;
   }
@@ -68,22 +75,22 @@ function render(variables = {}, debug = true) {
     return `
       <ul class="${displayValues.socialMediaPosition}">
         <li>
-          <a href="https://twitter.com/4geeksacademy">
+          <a href="https://twitter.com/${displayValues.twitter}">
             <i class="fab fa-twitter"></i>
           </a>
         </li>
         <li>
-          <a href="https://github.com/4geeksacademy">
+          <a href="https://github.com/${displayValues.github}">
             <i class="fab fa-github"></i>
           </a>
         </li>
         <li>
-          <a href="https://linkedin.com/school/4geeksacademy">
+          <a href="https://linkedin.com/school/${displayValues.linkedin}">
             <i class="fab fa-linkedin"></i>
           </a>
         </li>
         <li>
-          <a href="https://instagram.com/4geeksacademy">
+          <a href="https://instagram.com/${displayValues.instagram}">
             <i class="fab fa-instagram"></i>
           </a>
         </li>
