@@ -129,20 +129,42 @@ window.onload = function() {
   };
   render(window.variables); // render the card for the first time
 
-  document.querySelectorAll(".picker").forEach(function(elm) {
-    elm.addEventListener("change", function(e) {
-      // <- add a listener to every input
-      const attribute = e.target.getAttribute("for"); // when any input changes, collect the value
-      let values = {};
-      values[attribute] =
-        this.value == "" || this.value == "null"
-          ? null
-          : this.value == "true"
-          ? true
-          : this.value == "false"
-          ? false
-          : this.value;
-      render(Object.assign(window.variables, values)); // render again the card with new values
-    });
+  // document.querySelectorAll(".picker").forEach(function(elm) {
+  //   elm.addEventListener("change", function(e) {
+  //     // <- add a listener to every input
+  //     const attribute = e.target.getAttribute("for"); // when any input changes, collect the value
+  //     let values = {};
+  //     values[attribute] =
+  //       this.value == "" || this.value == "null"
+  //         ? null
+  //         : this.value == "true"
+  //         ? true
+  //         : this.value == "false"
+  //         ? false
+  //         : this.value;
+  //     render(Object.assign(window.variables, values)); // render again the card with new values
+  //   });
+  // });
+
+  document.querySelectorAll(".picker").forEach(function(picker) {
+    picker.addEventListener("change", handlePickerChange);
   });
+
+  function handlePickerChange(event) {
+    const attribute = event.target.getAttribute("for");
+    const value = parsePickerValue(event.target.value);
+    setVariables(attribute, value);
+    render(window.variables);
+  }
+
+  function parsePickerValue(value) {
+    if (value === "" || value === "null") return null;
+    if (value === "true") return true;
+    if (value === "false") return false;
+    return value;
+  }
+
+  function setVariables(attribute, value) {
+    window.variables[attribute] = value;
+  }
 };
